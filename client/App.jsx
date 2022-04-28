@@ -1,15 +1,12 @@
 import React from 'react';
 import './stylesheets/styles.css';
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
-
+import TopicsPage from './components/TopicsPage';
 
 const App = () => {
     return(
      <div>
-        <div>Whaaale heloo there</div>
-        <div>
-            <DeleteIcon></DeleteIcon>
-        </div>
+        <TopicsPage/>
     </div>
 
     )
