@@ -1,21 +1,22 @@
 import React, {useState, useEffect} from 'react';
 import { Typography, AppBar, Card, CardActions, CardContent, CardMedia, CssBaseline, Grid, Toolbar, Container, Button, Stack, Paper, TextField } from '@mui/material';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
+import AddQuestionPopUp from './AddQuestionPopUp';
 import QuestionPopUp from './QuestionPopUp'
 import Question from './Question'
 import questionDummyState from './dummyState/questionDummyState';
 
 
 const QuestionsPage = () => {
-    console.log(questionDummyState)
     const [questions, setQuestions] = useState([]);
     const [currentSelection, setCurrentSelection] = useState({title:'starting', bodyText:'out'});
     const [trigger, setTrigger] = useState(false);
+    const [addQuestionTrigger, setAddQuestionTrigger] = useState(false);
     // load dummy state on component render - mimicing future call to DB
     useEffect(() => setQuestions(questionDummyState), [])
     
     // const renderedQuestions = questions.map((s, i) => <Question key={i} title={s.title} onClick={() => {setCurrentSelection({title:s.title, textBody:s.textBody}) ; setTrigger(true)}}/>);
-    const renderedQuestions = questions.map((s, i) => <Question key={i} title={s.title} customOnClick={() => {setCurrentSelection({title:s.title, textBody:s.bodyText}) ; setTrigger(true)}}/>)
+    const renderedQuestions = questions.map((s, i) => <Question key={i} title={s.title} customOnClick={() => {setCurrentSelection({title:s.title, bodyText:s.bodyText}) ; setTrigger(true)}}/>)
 
     return(
         <>
@@ -43,7 +44,7 @@ const QuestionsPage = () => {
                             <TextField align='center' sx={{width:'80%', marginBottom: '15px'}} placeholder='what did you get asked today?'></TextField>
                         </Grid>
                         <Grid item xs={12}>
-                            <Button variant="contained" color="secondary" align='center' size='large'>
+                            <Button variant="contained" color="secondary" align='center' size='large' onClick={() => setAddQuestionTrigger(true)}>
                                 Add Question 
                             </Button>  
                         </Grid>
@@ -59,7 +60,12 @@ const QuestionsPage = () => {
 
                     </Stack>
                 </Container>
-                <QuestionPopUp trigger={trigger} setTrigger={setTrigger} title={currentSelection.title} bodyText={currentSelection.bodyText}></QuestionPopUp>
+                {addQuestionTrigger && (
+                    <AddQuestionPopUp questions={questions} setQuestions={setQuestions} setAddQuestionTrigger={setAddQuestionTrigger}/>
+                )}
+                {trigger && (
+                    <QuestionPopUp setTrigger={setTrigger} title={currentSelection.title} bodyText={currentSelection.bodyText}></QuestionPopUp>
+                )}
             </main>
         </> 
     )
