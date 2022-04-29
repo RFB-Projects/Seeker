@@ -41,7 +41,6 @@ const QuestionsPage = () => {
                             <Typography variant="h2" style={{marginTop: '50px', marginBottom: '30px'}}>Anyy quueestions?</Typography>
                         </Grid>
                         <Grid item xs={12}>
-                            <TextField align='center' sx={{width:'80%', marginBottom: '15px'}} placeholder='what did you get asked today?'></TextField>
                         </Grid>
                         <Grid item xs={12}>
                             <Button variant="contained" color="secondary" align='center' size='large' onClick={() => setAddQuestionTrigger(true)}>
