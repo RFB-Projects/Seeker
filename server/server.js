@@ -1,17 +1,23 @@
 import express from 'express'
-import topicRouter from './routes/topicRouter'
-import questionRouter from './routes/questionRouter'
-import userRouter from './routes/userRouter'
+import topicRouter from './routes/topicRouter.js'
+import questionRouter from './routes/questionRouter.js'
+import userRouter from './routes/userRouter.js'
 
-const PORT = 1000
+const PORT = 2000
 const app = express()
 
-// app.use for CORS, json, urlEncoded 
+app.use(express.json())
+// app.use for CORS, urlEncoded?
+
 // set up SQL URL wth a .env file
 app.use('/api/question', questionRouter)
 app.use('/api/topic', topicRouter)
 app.use('/api/user', userRouter)
 
+app.use('/', (req, res) => {
+    console.log("Hit server")
+    return res.status(400).json("Catch all...!")
+})
 // 404 error handler
 app.use('/*', (req, res) => {
     res.sendStatus(404)

@@ -12,6 +12,7 @@ const QuestionsPage = () => {
     const [currentSelection, setCurrentSelection] = useState({title:'starting', bodyText:'out'});
     const [trigger, setTrigger] = useState(false);
     const [addQuestionTrigger, setAddQuestionTrigger] = useState(false);
+    console.log("parent questions page re-render")
     // load dummy state on component render - mimicing future call to DB
     useEffect(() => setQuestions(questionDummyState), [])
     

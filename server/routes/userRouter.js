@@ -19,3 +19,4 @@ router.post('/signup', (req, res) => {
     return res.status(400).json('empty /signup post route set up')
 })
 
+export default router

@@ -28,3 +28,5 @@ router.delete('/deleteTopic', (req, res) => { // ok to use delete?
     console.log("empty /deleteTopic route set up")
     return res.status(400).json('empty /deleteTopic delete route set up')
 })
+
+export default router

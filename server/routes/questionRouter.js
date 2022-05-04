@@ -10,6 +10,7 @@ router.get('/getQuestions', (req, res) => {
 
 router.post('/addQuestion', (req, res) => {
     // query to add topic (and return new list - separate query?)
+    console.log(req.body)
     console.log("empty /addQuestion post route set up")
     return res.status(400).json('empty /addQuestion post route set up')
 })
@@ -28,3 +29,5 @@ router.delete('/deleteQuestion', (req, res) => { // ok to use delete?
     console.log("empty /deleteQuestion route set up")
     return res.status(400).json('empty /deleteQuestion delete route set up')
 })
+
+export default router
