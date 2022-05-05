@@ -12,9 +12,15 @@ const QuestionsPage = () => {
     const [currentSelection, setCurrentSelection] = useState({title:'starting', bodyText:'out'});
     const [trigger, setTrigger] = useState(false);
     const [addQuestionTrigger, setAddQuestionTrigger] = useState(false);
+    const [tempBool, setTempBool] = useState(false);
     console.log("parent questions page re-render")
     // load dummy state on component render - mimicing future call to DB
-    useEffect(() => setQuestions(questionDummyState), [])
+    useEffect(async () => {
+        if (tempBool){ // so it doesn't run on mount
+            const result = fetch('/api/questions/getQuestions/1') // adjust user_id
+            setQuestions(result)
+        }
+    }, [])
     
     // const renderedQuestions = questions.map((s, i) => <Question key={i} title={s.title} onClick={() => {setCurrentSelection({title:s.title, textBody:s.textBody}) ; setTrigger(true)}}/>);
     const renderedQuestions = questions.map((s, i) => <Question key={i} title={s.title} customOnClick={() => {setCurrentSelection({title:s.title, bodyText:s.bodyText}) ; setTrigger(true)}}/>)
@@ -29,9 +35,9 @@ const QuestionsPage = () => {
                         Seeker
                     </Typography>
                     <Grid container spacing={2} sx={{width:'400px', position:'absolute', right:'0px', marginRight:'20px'}}>
-                        <Grid item xs={4}><Button variant="contained" size='large' sx={{width:'100%'}}>Questions</Button></Grid>
+                        <Grid item xs={4}><Button variant="contained" size='large' sx={{width:'100%'}} onClick={() => setTempBool((prev)=>!prev)}>Questions</Button></Grid>
                         <Grid item xs={4}><Button variant="contained" size='large'sx={{width:'100%'}}>Topics</Button></Grid>
-                        <Grid item xs={4}><Button variant="contained" size='large'sx={{width:'100%'}}>Companies</Button></Grid>
+                        <Grid item xs={4}><Button variant="contained" size='large'sx={{width:'100%'}} >Companies</Button></Grid>
                     </Grid>
                 </Toolbar>
             </AppBar>

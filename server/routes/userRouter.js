@@ -1,5 +1,7 @@
 import { Router } from "express";
-// import controllers
+import userController from '../controllers/userController.js' // unpack
+import questionController from '../controllers/questionController.js' // unpack
+
 const router = Router();
 
 router.post('/login', (req, res) => {
