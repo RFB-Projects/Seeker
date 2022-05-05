@@ -7,6 +7,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 module.exports = {
   entry: [
     // entry point of our app
+    "regenerator-runtime/runtime.js", // enable async usage
     './client/index.js',
   ],
   output: {

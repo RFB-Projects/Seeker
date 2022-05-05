@@ -4,26 +4,43 @@ import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import AddQuestionPopUp from './AddQuestionPopUp';
 import QuestionPopUp from './QuestionPopUp'
 import Question from './Question'
+import 'regenerator-runtime'
 import questionDummyState from './dummyState/questionDummyState';
 
 
 const QuestionsPage = () => {
     const [questions, setQuestions] = useState([]);
-    const [currentSelection, setCurrentSelection] = useState({title:'starting', bodyText:'out'});
+    const [currentSelection, setCurrentSelection] = useState({title:'starting', blurb:'out'});
     const [trigger, setTrigger] = useState(false);
     const [addQuestionTrigger, setAddQuestionTrigger] = useState(false);
-    const [tempBool, setTempBool] = useState(false);
+    const [tempBool, setTempBool] = useState(false); // temporary
     console.log("parent questions page re-render")
-    // load dummy state on component render - mimicing future call to DB
-    useEffect(async () => {
-        if (tempBool){ // so it doesn't run on mount
-            const result = fetch('/api/questions/getQuestions/1') // adjust user_id
-            setQuestions(result)
+
+    useEffect(() => {
+        async function getQuestions() {
+            try{
+                const reqBody = { user_id: 1 } // hard coded for now (change)
+                const fetchParams = {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(reqBody)
+                }
+                const response = await fetch('/api/question/getQuestions', fetchParams)
+                const result = await response.json()
+                // console.log(result) // adjust user_id
+                setQuestions(result)
+            } catch (err) {
+                console.log("whoops")
+                console.log(err)
+            }
         }
-    }, [])
-    
+        if (tempBool) getQuestions()
+    }, [tempBool])
+
     // const renderedQuestions = questions.map((s, i) => <Question key={i} title={s.title} onClick={() => {setCurrentSelection({title:s.title, textBody:s.textBody}) ; setTrigger(true)}}/>);
-    const renderedQuestions = questions.map((s, i) => <Question key={i} title={s.title} customOnClick={() => {setCurrentSelection({title:s.title, bodyText:s.bodyText}) ; setTrigger(true)}}/>)
+    const renderedQuestions = questions.map((s, i) => <Question key={i} title={s.title} customOnClick={() => {setCurrentSelection({title:s.title, blurb:s.blurb}) ; setTrigger(true)}}/>)
 
     return(
         <>
@@ -70,7 +87,7 @@ const QuestionsPage = () => {
                     <AddQuestionPopUp questions={questions} setQuestions={setQuestions} setAddQuestionTrigger={setAddQuestionTrigger}/>
                 )}
                 {trigger && (
-                    <QuestionPopUp setTrigger={setTrigger} title={currentSelection.title} bodyText={currentSelection.bodyText}></QuestionPopUp>
+                    <QuestionPopUp setTrigger={setTrigger} title={currentSelection.title} blurb={currentSelection.blurb}></QuestionPopUp>
                 )}
             </main>
         </> 
