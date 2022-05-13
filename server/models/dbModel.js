@@ -1,9 +1,8 @@
 import pkg from 'pg'
 const { Pool } = pkg;
+import 'dotenv/config'
 
-const PG_URI = `postgres://cgwxjntn:nAcT6cwfQBn7ScyrfDK0qhnccPuNt1Y4@ziggy.db.elephantsql.com/cgwxjntn`
-
-const pool = new Pool({ connectionString: PG_URI});
+const pool = new Pool({ connectionString: process.env.DB_password});
 
 const poolENV = {
     query: (text, params, callback) => {

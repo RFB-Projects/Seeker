@@ -12,6 +12,7 @@ import 'regenerator-runtime'
 // 1 --> Can't handle apostrophes in titles or blurbs
 // 2 --> clicking inside editquestion window closes popup
 // 3 --> order changes up after edit question (order changes in SQL)
+// 4 --> size of editing text box doesn't grow
 // -------------------------------------------------------
 const QuestionsPage = () => {
     const [questions, setQuestions] = useState([]);
