@@ -19,7 +19,7 @@ app.use('/api/user', userRouter)
 
 app.use('/', (req, res) => {
     console.log("Hit server")
-    return res.status(400).json("Catch all...!")
+    return res.status(400).json("Bad URL...!")
 })
 // 404 error handler
 app.use('/*', (req, res) => {

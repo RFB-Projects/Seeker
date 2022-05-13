@@ -3,7 +3,7 @@ const questionController = {};
 
 questionController.getQuestions = async function (req, res, next) {
     try{
-        const { user_id } = req.body;
+        const { user_id } = req.params;
         const qString = `SELECT * FROM questions WHERE user_id=${user_id}`
         const results = await db.query(qString);
         console.log(results)
@@ -18,7 +18,7 @@ questionController.getQuestions = async function (req, res, next) {
 
 questionController.addQuestion = async function (req, res, next) {
     try{
-        const { title, blurb, user_id } = req.body
+        const { title, blurb, user_id } = req.body // still ok - redundant bc user_id in params
         const qString = `INSERT INTO questions VALUES ('${title}', '${blurb}','${user_id}')`
         const results = await db.query(qString);
         console.log(results)
@@ -32,15 +32,18 @@ questionController.addQuestion = async function (req, res, next) {
 
 questionController.deleteQuestion = async function (req, res, next) {
     try{
-        const { title } = req.body
-        const qString = `DELETE FROM questions WHERE title=${title}`
+        const { title, user_id } = req.params
+        console.log("delete question title", title)
+        const qString = `DELETE FROM questions WHERE title='${title}'`
         const results = await db.query(qString);
         console.log(results)
         console.log(results.rows);
+        res.locals.success = true;
         // come back to this - how to save in res.locals?
         return next();
-    } catch (err){
+    } catch (err){ // goes here if not found
         console.log('DB query error for deleteQuestion', err)
+        // res.locals.success = false;
         return next(err)
     }
 }

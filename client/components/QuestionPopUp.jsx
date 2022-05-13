@@ -5,7 +5,7 @@ import OutsideClickHandler from 'react-outside-click-handler';
 
 
 const QuestionPopUp = ({setTrigger, title, blurb}) => {
-    console.log("blurb...", blurb)
+    console.log("question popup rendered...", blurb)
     const [editable, setEditable] = useState(false)
 
     return (
@@ -27,19 +27,19 @@ const QuestionPopUp = ({setTrigger, title, blurb}) => {
                         <br/><br/>
 
                         <Stack direction='row' spacing={1} justifyContent='space-around' sx={{border:1}} >
-                            <Button variant="contained" color='error' sx={{width:'20%'}} onClick={()=> setTrigger(false)}> Cancel </Button>
                             {!editable && (
-                                <Button variant="contained" color='success' sx={{width:'20%'}} onClick={()=> setEditable(true)}> Edit </Button>
+                                <>
+                                    <Button variant="contained" color='error' sx={{width:'20%'}} onClick={()=> setTrigger(false)}> Cancel </Button>
+                                    <Button variant="contained" color='success' sx={{width:'20%'}} onClick={()=> setEditable(true)}> Edit </Button>
+                                </>
                             )}
                             {editable && (
-                                <Button variant="contained" color='success' sx={{width:'20%'}} onClick={()=> setEditable(false)}> Save </Button>
+                                <>
+                                    <Button variant="contained" color='error' sx={{width:'20%'}} onClick={()=> setEditable(false)}> Cancel Edits </Button>
+                                    <Button variant="contained" color='success' sx={{width:'20%'}} onClick={()=> setEditable(false)}> Save Edits </Button>
+                                </>                            
                             )}
                         </Stack>
-
-                        {/* <Stack direction='row' spacing={2}>
-                            <Button variant="outlined" color='secondary'> Cancel </Button>
-                            <Button variant="outlined" color='primary'> Save </Button>
-                        </Stack> */}
                     </Stack>
                 </OutsideClickHandler>   
                 </Box>

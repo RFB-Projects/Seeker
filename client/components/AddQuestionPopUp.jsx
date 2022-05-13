@@ -21,7 +21,7 @@ function AddQuestionPopUp({questions, setQuestions, setAddQuestionTrigger }) {
                     },
                     body: JSON.stringify(reqBody)
                 }
-                const response = await fetch('api/question/addQuestion', fetchParams);
+                const response = await fetch(`api/question/addQuestion${user_id}`, fetchParams);
                 const result = await response.json();
                 setQuestions(result)
             } else {

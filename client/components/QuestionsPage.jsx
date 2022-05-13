@@ -5,31 +5,43 @@ import AddQuestionPopUp from './AddQuestionPopUp';
 import QuestionPopUp from './QuestionPopUp'
 import Question from './Question'
 import 'regenerator-runtime'
+import ConfirmDeletePopUp from './ConfirmDeletePopUp'
 import questionDummyState from './dummyState/questionDummyState';
 
 
 const QuestionsPage = () => {
     const [questions, setQuestions] = useState([]);
-    const [currentSelection, setCurrentSelection] = useState({title:'starting', blurb:'out'});
+    const [userId, setUserId] = useState(1); // CHANGE TO NULL
+    const [currentSelection, setCurrentSelection] = useState({title:'starting', blurb:'out'}); // redundant?
     const [trigger, setTrigger] = useState(false);
     const [addQuestionTrigger, setAddQuestionTrigger] = useState(false);
+    const [renderConfirmDelete, setRenderConfirmDelete] = useState(false);
+    const [titleToDelete, setTitleToDelete] = useState('')
     const [tempBool, setTempBool] = useState(false); // temporary
-    console.log("parent questions page re-render")
+    // USER ID
+    // console.log("chopping block (parent):", titleToDelete)
+    console.log("trigger", trigger)
+    console.log("addQuestionTrigger",addQuestionTrigger)
+    console.log("confirmDeketetrigger", renderConfirmDelete)
+    console.log('questions', questions)
+
 
     useEffect(() => {
         async function getQuestions() {
             try{
-                const reqBody = { user_id: 1 } // hard coded for now (change)
-                const fetchParams = {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(reqBody)
-                }
-                const response = await fetch('/api/question/getQuestions', fetchParams)
+                const user_id = 1 // CHANGE HERE
+                // const reqBody = { user_id: 1 } // hard coded for now (change)
+                // const fetchParams = {
+                //     method: "POST",
+                //     headers: {
+                //         "Content-Type": "application/json"
+                //     },
+                //     body: JSON.stringify(reqBody)
+                // }
+                const response = await fetch(`/api/question/getQuestions/${userId}`)//, fetchParams)
                 const result = await response.json()
                 // console.log(result) // adjust user_id
+                console.log('result', result)
                 setQuestions(result)
             } catch (err) {
                 console.log("whoops")
@@ -40,7 +52,7 @@ const QuestionsPage = () => {
     }, [tempBool])
 
     // const renderedQuestions = questions.map((s, i) => <Question key={i} title={s.title} onClick={() => {setCurrentSelection({title:s.title, textBody:s.textBody}) ; setTrigger(true)}}/>);
-    const renderedQuestions = questions.map((s, i) => <Question key={i} title={s.title} customOnClick={() => {setCurrentSelection({title:s.title, blurb:s.blurb}) ; setTrigger(true)}}/>)
+    const renderedQuestions = questions.map((s, i) => <Question key={i} title={s.title} renderConfirmDelete={renderConfirmDelete} setRenderConfirmDelete={setRenderConfirmDelete} setTitleToDelete={setTitleToDelete} customOnClick={() => {setCurrentSelection({title:s.title, blurb:s.blurb}); setTrigger(true)}}/>)
 
     return(
         <>
@@ -88,6 +100,9 @@ const QuestionsPage = () => {
                 )}
                 {trigger && (
                     <QuestionPopUp setTrigger={setTrigger} title={currentSelection.title} blurb={currentSelection.blurb}></QuestionPopUp>
+                )}
+                {renderConfirmDelete && (
+                    <ConfirmDeletePopUp titleToDelete={titleToDelete} setTitleToDelete={setTitleToDelete} setRenderConfirmDelete={setRenderConfirmDelete} />
                 )}
             </main>
         </> 
