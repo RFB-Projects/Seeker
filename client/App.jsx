@@ -1,14 +1,13 @@
-import React from 'react';
-import './stylesheets/styles.css';
-import DeleteIcon from '@mui/icons-material/DeleteOutline';
-import QuestionsPage from './components/QuestionsPage';
+import React, {useState} from 'react';
+// import './stylesheets/styles.css';
 
 const App = () => {
-    return(
-     <div>
-        <QuestionsPage/>
-    </div>
+    const [selectedTab, setSelectedTab] = useState(0);
 
+    return(
+             <div>
+
+            </div>
     )
 }
 
