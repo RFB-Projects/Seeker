@@ -3,17 +3,16 @@ import {Button, Typography, Stack, Box, TextField} from '@mui/material'
 import './QuestionPage.scss'
 import OutsideClickHandler from 'react-outside-click-handler';
 
-
-function AddQuestionPopUp({questions, setQuestions, setAddQuestionTrigger }) {
+function AddQuestionPopUp({questions, setQuestions, setAddQuestionTrigger, userId }) {
     console.log("got made")
     console.log(questions)
     const [currentTitle, setCurrentTitle] = useState('')
     const [currentBlurb, setCurrentBlurb] = useState('')
 
-    async function addQuestion(title, blurb, user_id = 1){
+    async function addQuestion(title, blurb){
         try {
             if (currentTitle !== ''){
-                const reqBody = { title, blurb, user_id }
+                const reqBody = { title, blurb, userId }
                 const fetchParams = {
                     method: "POST",
                     headers: {
@@ -21,7 +20,7 @@ function AddQuestionPopUp({questions, setQuestions, setAddQuestionTrigger }) {
                     },
                     body: JSON.stringify(reqBody)
                 }
-                const response = await fetch(`api/question/addQuestion${user_id}`, fetchParams);
+                const response = await fetch(`api/question/addQuestion`, fetchParams);
                 const result = await response.json();
                 setQuestions(result)
             } else {
@@ -55,6 +54,6 @@ function AddQuestionPopUp({questions, setQuestions, setAddQuestionTrigger }) {
                 </div>
         </>
     )
-    }
+}
 
 export default AddQuestionPopUp    

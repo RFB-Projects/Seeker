@@ -2,27 +2,28 @@ import React, {useState, useEffect} from 'react';
 import { Typography, AppBar, Card, CardActions, CardContent, CardMedia, CssBaseline, Grid, Toolbar, Container, Button, Stack, Paper, TextField } from '@mui/material';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import AddQuestionPopUp from './AddQuestionPopUp';
-import QuestionPopUp from './QuestionPopUp'
+// import QuestionPopUp from './EditQuestionPopUp'
 import Question from './Question'
 import 'regenerator-runtime'
-import ConfirmDeletePopUp from './ConfirmDeletePopUp'
-import questionDummyState from './dummyState/questionDummyState';
+// import ConfirmDeletePopUp from './ConfirmDeletePopUp'
+// import questionDummyState from './dummyState/questionDummyState';
 
-
+//PAGE BUGS------------------------------------------------
+// 1 --> Can't handle apostrophes in titles or blurbs
+// 2 --> clicking inside editquestion window closes popup
+// 3 --> order changes up after edit question (order changes in SQL)
+// -------------------------------------------------------
 const QuestionsPage = () => {
     const [questions, setQuestions] = useState([]);
     const [userId, setUserId] = useState(1); // CHANGE TO NULL
-    const [currentSelection, setCurrentSelection] = useState({title:'starting', blurb:'out'}); // redundant?
-    const [trigger, setTrigger] = useState(false);
+    const [currentSelection, setCurrentSelection] = useState({title:'Initial', blurb:'State'}); // redundant?
+    // const [trigger, setTrigger] = useState(false);
     const [addQuestionTrigger, setAddQuestionTrigger] = useState(false);
-    const [renderConfirmDelete, setRenderConfirmDelete] = useState(false);
+    // const [renderConfirmDelete, setRenderConfirmDelete] = useState(false);
     const [titleToDelete, setTitleToDelete] = useState('')
     const [tempBool, setTempBool] = useState(false); // temporary
-    // USER ID
-    // console.log("chopping block (parent):", titleToDelete)
-    console.log("trigger", trigger)
+
     console.log("addQuestionTrigger",addQuestionTrigger)
-    console.log("confirmDeketetrigger", renderConfirmDelete)
     console.log('questions', questions)
 
 
@@ -52,7 +53,7 @@ const QuestionsPage = () => {
     }, [tempBool])
 
     // const renderedQuestions = questions.map((s, i) => <Question key={i} title={s.title} onClick={() => {setCurrentSelection({title:s.title, textBody:s.textBody}) ; setTrigger(true)}}/>);
-    const renderedQuestions = questions.map((s, i) => <Question key={i} title={s.title} renderConfirmDelete={renderConfirmDelete} setRenderConfirmDelete={setRenderConfirmDelete} setTitleToDelete={setTitleToDelete} customOnClick={() => {setCurrentSelection({title:s.title, blurb:s.blurb}); setTrigger(true)}}/>)
+    const renderedQuestions = questions.map((s, i) => <Question key={i} title={s.title} blurb={s.blurb} userId={userId} setQuestions={setQuestions}/>)
 
     return(
         <>
@@ -96,14 +97,14 @@ const QuestionsPage = () => {
                     </Stack>
                 </Container>
                 {addQuestionTrigger && (
-                    <AddQuestionPopUp questions={questions} setQuestions={setQuestions} setAddQuestionTrigger={setAddQuestionTrigger}/>
+                    <AddQuestionPopUp questions={questions} userId={userId} setQuestions={setQuestions} setAddQuestionTrigger={setAddQuestionTrigger}/>
                 )}
-                {trigger && (
+                {/* {trigger && (
                     <QuestionPopUp setTrigger={setTrigger} title={currentSelection.title} blurb={currentSelection.blurb}></QuestionPopUp>
-                )}
-                {renderConfirmDelete && (
+                )} */}
+                {/* {renderConfirmDelete && (
                     <ConfirmDeletePopUp titleToDelete={titleToDelete} setTitleToDelete={setTitleToDelete} setRenderConfirmDelete={setRenderConfirmDelete} />
-                )}
+                )} */}
             </main>
         </> 
     )
