@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import { Typography, AppBar, Card, CardActions, CardContent, CardMedia, CssBaseline, Grid, Toolbar, Container, Button, Stack, Paper, TextField } from '@mui/material';
-import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import AddQuestionPopUp from './AddQuestionPopUp';
 // import QuestionPopUp from './EditQuestionPopUp'
 import Question from './Question'
@@ -17,49 +16,29 @@ import 'regenerator-runtime'
 const QuestionsPage = () => {
     const [questions, setQuestions] = useState([]);
     const [userId, setUserId] = useState(1); // CHANGE TO NULL
-    const [currentSelection, setCurrentSelection] = useState({title:'Initial', blurb:'State'}); // redundant?
-    // const [trigger, setTrigger] = useState(false);
+    // const [currentSelection, setCurrentSelection] = useState({title:'Initial', blurb:'State'}); // redundant?
     const [addQuestionTrigger, setAddQuestionTrigger] = useState(false);
-    // const [renderConfirmDelete, setRenderConfirmDelete] = useState(false);
-    const [titleToDelete, setTitleToDelete] = useState('')
-    const [tempBool, setTempBool] = useState(false); // temporary
-
-    console.log("addQuestionTrigger",addQuestionTrigger)
-    console.log('questions', questions)
-
 
     useEffect(() => {
         async function getQuestions() {
             try{
-                const user_id = 1 // CHANGE HERE
-                // const reqBody = { user_id: 1 } // hard coded for now (change)
-                // const fetchParams = {
-                //     method: "POST",
-                //     headers: {
-                //         "Content-Type": "application/json"
-                //     },
-                //     body: JSON.stringify(reqBody)
-                // }
-                const response = await fetch(`/api/question/getQuestions/${userId}`)//, fetchParams)
+                const response = await fetch(`/api/question/getQuestions/${userId}`)
                 const result = await response.json()
-                // console.log(result) // adjust user_id
-                console.log('result', result)
                 setQuestions(result)
             } catch (err) {
                 console.log("whoops")
                 console.log(err)
             }
         }
-        if (tempBool) getQuestions()
-    }, [tempBool])
+        getQuestions()
+    }, [])
 
     // const renderedQuestions = questions.map((s, i) => <Question key={i} title={s.title} onClick={() => {setCurrentSelection({title:s.title, textBody:s.textBody}) ; setTrigger(true)}}/>);
     const renderedQuestions = questions.map((s, i) => <Question key={i} title={s.title} blurb={s.blurb} userId={userId} setQuestions={setQuestions}/>)
 
     return(
         <>
-            <CssBaseline />
-            <AppBar position="relative" color='secondary'>
+            {/* <AppBar position="relative" color='secondary'>
                 <Toolbar >
                     <DirectionsRunIcon sx={{marginRight:'15px'}}></DirectionsRunIcon>
                     <Typography variant="h6">
@@ -71,9 +50,9 @@ const QuestionsPage = () => {
                         <Grid item xs={4}><Button variant="contained" size='large'sx={{width:'100%'}} >Companies</Button></Grid>
                     </Grid>
                 </Toolbar>
-            </AppBar>
+            </AppBar> */}
             <main>
-                <Container maxwidth='m' align='center' sx={{border:1}}>
+                <Container maxwidth='m' align='center'>
                     <Grid container >
                         <Grid item xs={12}>
                             <Typography variant="h2" style={{marginTop: '50px', marginBottom: '30px'}}>Anyy quueestions?</Typography>
@@ -92,20 +71,11 @@ const QuestionsPage = () => {
                 <Container style={{marginTop:'50px'}} sx={{border:1}} >
                     <Stack spacing={3} align='center'>
                         {renderedQuestions}
-                        {/* <Button style={{height:'50px'}} color='success'><Typography variant='h5' onClick={() => setTrigger(true)}>Tell me about yourself</Typography></Button>
-                        <Paper style={{height:'50px'}}><Typography variant='h5'>Tell me about yourself</Typography></Paper> */}
-
                     </Stack>
                 </Container>
                 {addQuestionTrigger && (
                     <AddQuestionPopUp questions={questions} userId={userId} setQuestions={setQuestions} setAddQuestionTrigger={setAddQuestionTrigger}/>
                 )}
-                {/* {trigger && (
-                    <QuestionPopUp setTrigger={setTrigger} title={currentSelection.title} blurb={currentSelection.blurb}></QuestionPopUp>
-                )} */}
-                {/* {renderConfirmDelete && (
-                    <ConfirmDeletePopUp titleToDelete={titleToDelete} setTitleToDelete={setTitleToDelete} setRenderConfirmDelete={setRenderConfirmDelete} />
-                )} */}
             </main>
         </> 
     )
