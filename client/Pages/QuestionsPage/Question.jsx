@@ -4,7 +4,6 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditQuestionPopUp from './EditQuestionPopUp';
 import DeleteQuestionPopUp from './DeleteQuestionPopUp';
 import { pink, lightBlue } from '@mui/material/colors'
-const secondaryColor = pink[600]
 const tertiaryColor = lightBlue[400]
 
 

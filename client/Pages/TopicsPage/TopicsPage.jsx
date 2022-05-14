@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import TopicCard from './TopicCard'
 import {Container, Grid, Typography, Button, Toolbar, IconButton, Tooltip} from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
+import AddTopicPopUp from '../TopicsPage/AddTopicPopUp'
 
 // FIXES -----------------------------------------------------------------------
 // 1 --> make cards responsive (different proportions for screen sized)
@@ -45,7 +46,7 @@ function TopicsPage({userId}) {
                     <Grid container>
                         <Grid item xs={1}>
                             <Tooltip title="Add Topic">
-                                <IconButton onClick={()=> console.log("console log... for now")}>
+                                <IconButton onClick={()=> setAddTopic(prev=>!prev)}>
                                     <AddIcon sx={{color:"grey"}}></AddIcon>
                                 </IconButton>
                             </Tooltip>
@@ -62,11 +63,14 @@ function TopicsPage({userId}) {
                     {renderedContent}
                 </Grid>
             </Container>
+            {addTopic && (
+                <AddTopicPopUp topics={topics} setTopics={setTopics} setAddTopic={setAddTopic} userId={userId}></AddTopicPopUp>
+            )}
         </>
     )
 }
 
-export default TopicsPage
+export default TopicsPage 
 
 
 // const dummyTopics = [

@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
-import {Card, CardActions, CardActionArea, CardContent, Typography, Button} from '@mui/material'
-// IMPORT POPUP (QUESTION POPUP?)
+import {Card, CardActions, CardActionArea, CardContent, Typography, Button, Tooltip, IconButton} from '@mui/material'
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 function TopicCard({title, blurb, status, setTopics, userId}) {
     const [cardOpen, setCardOpen] = useState(false);
@@ -45,7 +45,12 @@ function TopicCard({title, blurb, status, setTopics, userId}) {
                     </CardContent>
                 </CardActionArea>
                 <CardActions>
-                    <Button>Edit Topic</Button>
+                    <Button sx={{marginRight:10}}>Edit Topic</Button>
+                    <Tooltip title='Delete'>
+                        <IconButton onClick={() => setDeleteTrigger(prev=> !prev)}>
+                            <DeleteOutlineIcon />
+                        </IconButton>
+                    </Tooltip>
                 </CardActions>
             </Card>
         </div>

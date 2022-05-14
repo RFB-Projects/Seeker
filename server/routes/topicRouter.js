@@ -1,11 +1,10 @@
 import { Router } from "express";
 // import controllers
 import topicController from '../controllers/topicController.js'
-const {getTopics, updateStatus} = topicController;
+const {getTopics, addTopic, updateStatus, deleteTopic} = topicController;
 const router = Router();
 
 router.get('/getTopics/:userId', getTopics, (req, res) => {
-    // query for list of all topics for certain user
     console.log("/getTopics route complete")
     return res.status(200).json(res.locals)
 })
@@ -15,10 +14,14 @@ router.patch('/updateStatus', updateStatus, getTopics, (req, res) => { // ok to 
     return res.status(200).json(res.locals)
 })
 
-router.post('/addTopic', (req, res) => {
-    // query to add topic (and return new list - separate query?)
-    console.log("empty /adTopics post route set up")
-    return res.status(400).json('empty /addTopic post route set up')
+router.post('/addTopic', addTopic, getTopics, (req, res) => {
+    console.log("/addTopics route complete")
+    return res.status(200).json(res.locals)
+})
+
+router.delete('/deleteTopic/:userId/:title', deleteTopic, getTopics, (req, res) => { // ok to use delete?
+    console.log("/deleteTopic route complete")
+    return res.status(200).json(res.locals)
 })
 
 router.put('/writeInTopic', (req, res) => {
@@ -26,9 +29,6 @@ router.put('/writeInTopic', (req, res) => {
     return res.status(400).json('empty /writeInTopic put route set up')
 })
 
-router.delete('/deleteTopic', (req, res) => { // ok to use delete?
-    console.log("empty /deleteTopic route set up")
-    return res.status(400).json('empty /deleteTopic delete route set up')
-})
+
 
 export default router
