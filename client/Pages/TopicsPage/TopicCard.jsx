@@ -4,12 +4,12 @@ import {Card, CardActions, CardActionArea, CardContent, Typography, Button} from
 
 function TopicCard({title, blurb, status, setTopics, userId}) {
     const [cardOpen, setCardOpen] = useState(false);
-    console.log(title + 'component rendered with status' + status + typeof status)
+    // console.log(title + 'component rendered with status' + status + typeof status)
     let coloration = "";
     if (status === 0) coloration = "grey"
     if (status === 1) coloration = "orange"
     if (status === 2) coloration = "green"
-    console.log("topic card coloration", coloration)
+    // console.log("topic card coloration", coloration)
 
     async function changeStatus() {
         function newStatusHelper(n) {
@@ -26,6 +26,8 @@ function TopicCard({title, blurb, status, setTopics, userId}) {
             }
             const fetchedResult = await fetch('/api/topic/updateStatus/', fetchBody)
             const result = await fetchedResult.json()
+            result.sort((a, b) => a.topic_pk - b.topic_pk)
+            console.log(result)
             setTopics(result)
         }catch(err){
             console.log("error in clientside changeStatus - topic - request")
@@ -34,19 +36,19 @@ function TopicCard({title, blurb, status, setTopics, userId}) {
     }
 
     return (
-        <>
+        <div >
             <Card sx={{backgroundColor:coloration, margin:2}}>
                 <CardActionArea onClick={changeStatus}>
-                    <CardContent>
-                        <Typography variant="h3">{title}</Typography>
-                        <Typography variant="h5">{blurb}</Typography>
+                    <CardContent sx={{height:'150px'}}>
+                        <Typography variant="h4">{title}</Typography>
+                        <Typography variant="h6">{blurb}</Typography>
                     </CardContent>
                 </CardActionArea>
                 <CardActions>
                     <Button>Edit Topic</Button>
                 </CardActions>
             </Card>
-        </>
+        </div>
     )
 }
 

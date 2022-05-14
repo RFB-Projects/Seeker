@@ -21,6 +21,7 @@ const EditQuestionPopUp = ({title, blurb, userId, setQuestionTrigger, setQuestio
             }
             const fetchResults = await fetch('/api/question/editQuestion', fetchParams)
             const results = await fetchResults.json()
+            results.sort((a, b) => a.question_pk - b.question_pk)
             setQuestions(results)
             setEditable(prev=>!prev)
         } catch (err) {

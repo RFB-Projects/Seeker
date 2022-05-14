@@ -3,12 +3,16 @@ import { Typography, Card, Grid, Container, Button, StackProps, Stack } from '@m
 import AddQuestionPopUp from './AddQuestionPopUp';
 import Question from './Question'
 import 'regenerator-runtime'
+import { pink, indigo } from '@mui/material/colors'
+const primaryColor = indigo[600]
+const secondaryColor = pink[600]
 
 //PAGE BUGS------------------------------------------------
 // 1 --> Can't handle apostrophes in titles or blurbs
 // 2 --> clicking inside editquestion window closes popup
 // 3 --> order changes up after edit question (order changes in SQL)
 // 4 --> size of editing text box doesn't grow
+// 5 --> edit route doesn't work when you 'save edits'
 // -------------------------------------------------------
 const QuestionsPage = ({userId, setUserId}) => {
     const [questions, setQuestions] = useState([]);
@@ -20,6 +24,7 @@ const QuestionsPage = ({userId, setUserId}) => {
             try{
                 const response = await fetch(`/api/question/getQuestions/${userId}`)
                 const result = await response.json()
+                result.sort((a, b) => a.question_pk - b.question_pk)
                 setQuestions(result)
             } catch (err) {
                 console.log("whoops")
@@ -29,9 +34,8 @@ const QuestionsPage = ({userId, setUserId}) => {
         getQuestions()
     }, [])
     
-
     // const renderedQuestions = questions.map((s, i) => <Question key={i} title={s.title} onClick={() => {setCurrentSelection({title:s.title, textBody:s.textBody}) ; setTrigger(true)}}/>);
-    const renderedQuestions = questions.map((s, i) => <Question key={i} title={s.title} blurb={s.blurb} userId={userId} setQuestions={setQuestions}/>)
+    const renderedQuestions = questions.map((s, i) => <Question key={i} title={s.title} blurb={s.blurb} userId={userId} complete={s.complete} setQuestions={setQuestions}/>)
 
     return(
         <>
@@ -44,7 +48,7 @@ const QuestionsPage = ({userId, setUserId}) => {
                         <Grid item xs={12}>
                         </Grid>
                         <Grid item xs={12}>
-                            <Button variant="contained" color="secondary" align='center' size='large' onClick={() => setAddQuestionTrigger(true)}>
+                            <Button variant="contained" sx={{backgroundColor:primaryColor}} align='center' size='large' onClick={() => setAddQuestionTrigger(true)}>
                                 Add Question 
                             </Button>  
                         </Grid>
@@ -52,7 +56,7 @@ const QuestionsPage = ({userId, setUserId}) => {
                   
                     <Card/>
                 </Container>
-                <Container style={{marginTop:'50px'}} sx={{border:1}} >
+                <Container style={{marginTop:'50px'}}>
                     <Stack spacing={3} align='center'>
                         {renderedQuestions}
                     </Stack>

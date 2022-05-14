@@ -1,6 +1,6 @@
 import { Router } from "express";
 import questionController from '../controllers/questionController.js' // wouldn't let me deconstruct
-const {getQuestions, addQuestion, deleteQuestion, editQuestion} = questionController;
+const {getQuestions, addQuestion, deleteQuestion, editQuestion, switchStatus} = questionController;
 const router = Router();
 
 router.get('/getQuestions/:userId', getQuestions, (req, res) => { // security for user_id?
@@ -24,6 +24,11 @@ router.delete('/deleteQuestion/:title/:userId', deleteQuestion, getQuestions, (r
 
 router.patch('/editQuestion', editQuestion, getQuestions, (req, res) => {
     console.log("/editQuestion route complete")
+    return res.status(200).json(res.locals)
+})
+
+router.patch('/switchStatus', switchStatus, getQuestions, (req, res) => { // ok to use push?
+    console.log(" /switchStatus route complete")
     return res.status(200).json(res.locals)
 })
 

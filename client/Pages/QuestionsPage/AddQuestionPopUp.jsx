@@ -22,6 +22,7 @@ function AddQuestionPopUp({questions, setQuestions, setAddQuestionTrigger, userI
                 }
                 const response = await fetch(`api/question/addQuestion`, fetchParams);
                 const result = await response.json();
+                result.sort((a, b) => a.question_pk - b.question_pk)
                 setQuestions(result)
             } else {
                 console.log("user needs to enter a string")

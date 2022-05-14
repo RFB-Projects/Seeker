@@ -67,6 +67,21 @@ questionController.editQuestion = async function (req, res, next) {
     }
 }
 
+questionController.switchStatus = async function (req, res, next) {
+    try{
+        const { title, complete, userId } = req.body
+        req.params = Object.assign({}, req.params, { userId })
+        const qString = `UPDATE questions SET complete=${complete} WHERE user_id=${userId} AND title='${title}'` // FILL IN
+        const results = await db.query(qString);
+        console.log("back from update query", results)
+        // come back to this - how to save in res.locals?
+        return next(); 
+    } catch (err){
+        console.log('DB query error for editQuestion', err)
+        return next(err) // route errors more cleanly (query failed goes here)
+    }
+}
+
 // CHANGE CATEGORY
 
 export default questionController;
