@@ -11,17 +11,18 @@ import WelcomePage from './Pages/WelcomePage/WelcomePage.jsx';
 const container = document.getElementById('app');
 const root = createRoot(container);
 
+const fakeUserId = 1;
+
 root.render(
   <BrowserRouter>
-  <Routes>
-    <Route path="/" element={<App/>}>
-        <Route path='/' element={<WelcomePage/>}></Route>
-        <Route path='questions' element={<QuestionsPage/>}></Route>
-        <Route path='topics' element={<TopicsPage/>}></Route>
-        <Route path='companies' element={<CompanyPage/>}></Route>
-    </Route>
-
-  </Routes>
+    <Routes>
+      <Route path="/" element={<App/>}>
+          <Route path='/' element={<WelcomePage/>}></Route>
+          <Route path='questions' element={<QuestionsPage userId={fakeUserId}/>}></Route>
+          <Route path='topics' element={<TopicsPage userId={fakeUserId}/>}></Route>
+          <Route path='companies' element={<CompanyPage userId={fakeUserId} />}></Route>
+      </Route>
+    </Routes>
   </BrowserRouter>,
   // document.getElementById('app')
 );

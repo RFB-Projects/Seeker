@@ -1,6 +1,6 @@
 import React from 'react'
 
-function CompanyPage() {
+function CompanyPage({userId}) {
   return (
     <div>CompanyPage</div>
   )
