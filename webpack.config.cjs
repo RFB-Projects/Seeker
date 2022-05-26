@@ -7,6 +7,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 module.exports = {
   entry: [
     // entry point of our app
+    "regenerator-runtime/runtime.js", // enable async usage
     './client/index.js',
   ],
   output: {
@@ -33,7 +34,7 @@ module.exports = {
     headers: { 'Access-Control-Allow-Origin': '*' },
     proxy: {
       '/api/**': {
-        target: 'http://localhost:3000/',
+        target: 'http://localhost:2000/',
         secure: false,
       },
     },
