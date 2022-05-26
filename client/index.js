@@ -17,10 +17,10 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App/>}>
-          <Route path='/' element={<WelcomePage/>}></Route>
+          <Route path='companies' element={<WelcomePage/>}></Route>
           <Route path='questions' element={<QuestionsPage userId={fakeUserId}/>}></Route>
           <Route path='topics' element={<TopicsPage userId={fakeUserId}/>}></Route>
-          <Route path='companies' element={<CompanyPage userId={fakeUserId} />}></Route>
+          <Route path='/' element={<CompanyPage userId={fakeUserId} />}></Route>
       </Route>
     </Routes>
   </BrowserRouter>,

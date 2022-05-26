@@ -8,3 +8,9 @@ body {
     align-items: center;
     /* text-decoration: none; */
 }
+
+#outlet_div{
+    border: 5px solid green;
+    position:absolute;
+    width:100vw;
+}

@@ -13,7 +13,7 @@ const App = () => {
     console.log(coloration) 
 
     return(
-        <>
+        <div>
             <CssBaseline/>
             <AppBar position="relative" sx={{backgroundColor:primaryColor }}>
                 <Toolbar>
@@ -46,8 +46,8 @@ const App = () => {
                     </Grid>
                 </Toolbar>
             </AppBar>
-            <Outlet />
-        </>
+            <Outlet backgroundColor='yellow'/>
+        </div>
     )
 }
 

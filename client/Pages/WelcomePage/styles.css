@@ -1,0 +1,36 @@
+#b {
+    background-color: grey;
+}
+
+#container {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content:stretch ;
+    border: 2px solid black;
+}
+
+#show_pokemon {
+    width:500px;
+    height:600px;
+    background-color: bisque;
+    margin-right: 300px;
+    margin-top: 50px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#show_pokemon_header {
+    margin: 10px;
+}
+
+#show_pokemon_body {
+    display:flex;
+    flex-direction: column;
+    align-items:flex-start;
+}
+
+#item {
+    margin:10px
+}
